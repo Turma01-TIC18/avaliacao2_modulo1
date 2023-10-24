@@ -11,42 +11,6 @@ class Data {
     public:
    
         
-        string toString() {
-            string ret = "";
-            ret.append(to_string(dia));
-            ret.append("/");
-            ret.append(to_string(mes));
-            ret.append("/");
-            ret.append(to_string(ano));
-            return ret;
-        }
-        
-
-        int compararCom(const Data& outraData) const {
-            if (ano < outraData.ano)
-                return -1;
-            else if (ano > outraData.ano)
-                return 1;
-            else {
-                if (mes < outraData.mes)
-                    return -1;
-                else if (mes > outraData.mes)
-                    return 1;
-                else {
-                    if (dia < outraData.dia)
-                        return -1;
-                    else if (dia > outraData.dia)
-                        return 1;
-                    else
-                        return 0;
-                }
-            }
-        }
-
-        static int compara(Data d1, Data d2) {
-            return d1.compararCom(d2);
-        }
-
         Data(int _dia, int _mes, int _ano) {
             dia = _dia;
             mes = _mes;
@@ -64,6 +28,43 @@ class Data {
         int getAno() const {
             return ano;
         }
+
+        string toString() {
+            string ret = "";
+            ret.append(to_string(dia));
+            ret.append("/");
+            ret.append(to_string(mes));
+            ret.append("/");
+            ret.append(to_string(ano));
+            return ret;
+        }
+        
+
+        int compararCom(const Data& _outraData) const {
+            if (ano < _outraData.ano)
+                return -1;
+            else if (ano > _outraData.ano)
+                return 1;
+            else {
+                if (mes < _outraData.mes)
+                    return -1;
+                else if (mes > _outraData.mes)
+                    return 1;
+                else {
+                    if (dia < _outraData.dia)
+                        return -1;
+                    else if (dia > _outraData.dia)
+                        return 1;
+                    else
+                        return 0;
+                }
+            }
+        }
+
+        static int compara(Data _d1, Data _d2) {
+            return _d1.compararCom(_d2);
+        }
+
 
 };
 
@@ -84,7 +85,7 @@ class ListaDatas : public Lista {
             int dia, mes, ano;
 
             int numElementos;
-            cout << "Quantos elementos vão existir na lista de Datas? ";
+            cout << "Quantos elementos Datas? ";
             cin >> numElementos;
             cin.ignore();
 
@@ -137,9 +138,9 @@ class ListaDatas : public Lista {
 
             Data menor = dados[0]; 
 
-            for (const Data& data : dados)  {
-                if (data.compararCom(menor) < 0) {
-                    menor = data; 
+            for (const Data& _data : dados)  {
+                if (_data.compararCom(menor) < 0) {
+                    menor = _data; 
                 }
             }
 
@@ -154,9 +155,9 @@ class ListaDatas : public Lista {
 
             Data maior = dados[0]; 
 
-            for (const Data& data : dados) {
-                if (data.compararCom(maior) > 0) {
-                    maior = data; 
+            for (const Data& _data : dados) {
+                if (_data.compararCom(maior) > 0) {
+                    maior = _data; 
                 }
             }
 
@@ -165,7 +166,7 @@ class ListaDatas : public Lista {
 
         void listarEmOrdem() override {
             int n;
-            cout << "Classificar quantos nomes? " << endl;
+            cout << "Classificar quantas Datas? " << endl;
             cin >> n;
             if (dados.empty()) {
                 cout << "A lista de datas está vazia." << endl;
