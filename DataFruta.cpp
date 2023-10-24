@@ -9,8 +9,7 @@ class Data {
     int dia, mes, ano;
 
     public:
-   
-        
+          
         Data(int _dia, int _mes, int _ano) {
             dia = _dia;
             mes = _mes;
@@ -39,7 +38,6 @@ class Data {
             return ret;
         }
         
-
         int compararCom(const Data& _outraData) const {
             if (ano < _outraData.ano)
                 return -1;
@@ -64,17 +62,15 @@ class Data {
         static int compara(Data _d1, Data _d2) {
             return _d1.compararCom(_d2);
         }
-
-
 };
 
 class Lista {
-public:
-    virtual void entradaDeDados() = 0;
-    virtual void mostraMediana() = 0;
-    virtual void mostraMenor() = 0;
-    virtual void mostraMaior() = 0;
-    virtual void listarEmOrdem() = 0;
+    public:
+        virtual void entradaDeDados() = 0;
+        virtual void mostraMediana() = 0;
+        virtual void mostraMenor() = 0;
+        virtual void mostraMaior() = 0;
+        virtual void listarEmOrdem() = 0;
 };
 
 class ListaDatas : public Lista {
@@ -99,7 +95,7 @@ class ListaDatas : public Lista {
                 dados.push_back(data);
             }
                     
-            }
+        }
 
         void mostraMediana() override {
             if (dados.empty()) {
@@ -145,7 +141,7 @@ class ListaDatas : public Lista {
             }
 
             cout << "Menor data: " << menor.toString() << endl;
-            }
+        }
 
         void mostraMaior() override {
             if (dados.empty()) {
