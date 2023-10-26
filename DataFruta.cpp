@@ -181,22 +181,70 @@ class ListaNomes : public Lista {
 	public:
 	
 	    void entradaDeDados() override {
-            
+            int numElementos;
+            cout << "Quantos elementos para Nomes? ";
+            cin >> numElementos;
+            cin.ignore();
+
+            for (int i = 0; i < numElementos; i++) {
+                string nomes;
+                cout << "Digite o(s) nome(s) " << i + 1 << ": ";
+                cin >> nomes;
+
+                lista.push_back(nomes);
+            }
         }
 
         void mostraMediana() override {
-            
+            if (lista.empty()) {
+                cout << "A lista está vazia." << endl;
+                return;
+            }
+
+            sort(lista.begin(), lista.end());
+
+            int tamanho = lista.size();
+            if (tamanho % 2 != 0) {
+                string mediana1 = lista[tamanho / 2];
+                cout << "Mediana: " << mediana1 << endl;
+            } else {
+                string mediana2 = lista[tamanho / 2 - 1];
+                cout << "Mediana: " << mediana2 << endl;
+            }
         }
 
         void mostraMenor() override {
-            
+            if (lista.empty()) {
+                cout << "A lista está vazia." << endl;
+                return;
+            }
+
+            string menor = *min_element(lista.begin(), lista.end());
+            cout << "Menor elemento: " << menor << endl;
         }
 
         void mostraMaior() override {
-           
+            if (lista.empty()) {
+                cout << "A lista está vazia." << endl;
+                return;
+            }
+
+            string maior = *max_element(lista.begin(), lista.end());
+            cout << "Maior elemento: " << maior << endl;
         }
         void listarEmOrdem() override {
-            
+            int n;
+            cout << "Classificar quantos nomes? " << endl;
+            cin >> n;
+            if (lista.empty()) {
+            cout << "A lista está vazia." << endl;
+            return;
+            }
+
+            cout << "Exibindo " << n << " nomes da lista:" << endl;
+            for (int i = 0; i < min(n, static_cast<int>(lista.size())); i++) {
+                cout << i+1 << "- " << lista[i] << endl;
+            }
         }
 };
 
