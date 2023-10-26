@@ -7,6 +7,7 @@
 using namespace std;
 
 class Data {
+
     int dia, mes, ano;
 
     public:
@@ -204,6 +205,7 @@ class ListaNomes : public Lista {
 };
 
 class ListaSalarios : public Lista {
+
 	vector<float> lista;
 	
 	public:
@@ -285,3 +287,6 @@ int main() {
 
     return 0;
 }
+
+
+
