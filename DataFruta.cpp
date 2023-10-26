@@ -73,7 +73,7 @@ class Lista {
         virtual void listarEmOrdem() = 0;
 };
 
-class gerarData : public Lista {
+class ListaDatas : public Lista {
     vector<Data> dados;
 
     public:
@@ -401,7 +401,7 @@ class ListaIdades : public Lista  {
 int main() {
     vector<Lista*> listaGeral;
 
-    gerarData listaData;
+    ListaDatas listaData;
     ListaNomes listaNomes;
     ListaIdades listaIdades;
     ListaSalarios listaSalarios;
