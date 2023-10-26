@@ -278,7 +278,7 @@ class ListaSalarios : public Lista {
 
             for (int i = 0; i < numElementos; i++) {
                 float listas;
-                cout << "Digite o(s) salário(s) " << i + 1 << ": ";
+                cout << "Digite o(s) salário(s) " << i + 1 << " cd .em R$ ";
                 cin >> listas;
 
                 lista.push_back(listas);
@@ -296,10 +296,10 @@ class ListaSalarios : public Lista {
             int tamanho = lista.size();
             if (tamanho % 2 != 0) {
                 float mediana1 = lista[tamanho / 2];
-                cout << "Mediana: " << fixed << setprecision(2) << mediana1 << endl;
+                cout << "Mediana: R$ " << fixed << setprecision(2) << mediana1 << endl;
             } else {
                 float mediana2 = lista[tamanho / 2 - 1];
-                cout << "Mediana: " << fixed << setprecision(2) << mediana2 << endl;
+                cout << "Mediana: R$ " << fixed << setprecision(2) << mediana2 << endl;
             }
         }
 
@@ -310,7 +310,7 @@ class ListaSalarios : public Lista {
             }
 
             float menor = *min_element(lista.begin(), lista.end());
-            cout << "Menor elemento: " << fixed << setprecision(2) << menor << endl;
+            cout << "Menor elemento: R$ " << fixed << setprecision(2) << menor << endl;
         }
 
         void mostraMaior() override {
@@ -320,7 +320,7 @@ class ListaSalarios : public Lista {
             }
 
             float maior = *max_element(lista.begin(), lista.end());
-            cout << "Maior elemento: " << fixed << setprecision(2) << maior  << endl;
+            cout << "Maior elemento: R$ " << fixed << setprecision(2) << maior  << endl;
         }
 
         void listarEmOrdem() override {
@@ -334,7 +334,7 @@ class ListaSalarios : public Lista {
 
             cout << "Exibindo " << n << " salário(s) da lista:" << endl;
             for (int i = 0; i < min(n, static_cast<int>(lista.size())); i++) {
-                cout << i+1 << "- " << fixed << setprecision(2) << lista[i] << endl;
+                cout << i+1 << " - R$" << fixed << setprecision(2) << lista[i] << endl;
             }
         }
 };
@@ -377,14 +377,37 @@ class ListaIdades : public Lista  {
     	}
 
         void mostraMenor() override {
-            
+            if (lista.empty()) {
+                cout << "A lista está vazia." << endl;
+                return;
+            }
+
+            float menor = *min_element(lista.begin(), lista.end());
+            cout << "Menor elemento: " << menor << endl;
         }
 
         void mostraMaior() override {
-            
+            if (lista.empty()) {
+                cout << "A lista está vazia." << endl;
+                return;
+            }
+
+            float maior = *max_element(lista.begin(), lista.end());
+            cout << "Maior elemento: " << maior << endl;
         }
         void listarEmOrdem() override {
-            
+            int n;
+            cout << "Classificar quantos idades? " << endl;
+            cin >> n;
+            if (lista.empty()) {
+                cout << "A lista está vazia." << endl;
+                return;
+            }
+
+            cout << "Exibindo " << n << " idade(s) da lista:" << endl;
+            for (int i = 0; i < min(n, static_cast<int>(lista.size())); i++) {
+                cout << i+1 << "- " << lista[i] << endl;
+            }
         }
 	
 };
