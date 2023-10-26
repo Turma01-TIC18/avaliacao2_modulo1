@@ -344,14 +344,37 @@ class ListaIdades : public Lista  {
 	
 	public:
 		void entradaDeDados() override {
-            
+            int numElementos;
+            cout << "Quantos elementos para Idade? ";
+            cin >> numElementos;
+            cin.ignore();
+
+            for (int i = 0; i < numElementos; i++) {
+                float listas;
+                cout << "Digite a(s) idade(s) " << i + 1 << ": ";
+                cin >> listas;
+
+                lista.push_back(listas);
+            }
         }
 
         void mostraMediana() override {
-            
+            if (lista.empty()) {
+                cout << "A lista está vazia." << endl;
+                return;
+            }
 
-            
-        }
+            sort(lista.begin(), lista.end());
+
+            int tamanho = lista.size();
+            if (tamanho % 2 != 0) {
+                float mediana1 = lista[tamanho / 2];
+                cout << "Mediana: " << mediana1 << endl;
+            } else {
+                float mediana2 = lista[tamanho / 2 - 1];
+                cout << "Mediana: " << mediana2 << endl;
+            }
+    	}
 
         void mostraMenor() override {
             
