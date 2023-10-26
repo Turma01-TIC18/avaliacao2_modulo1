@@ -8,72 +8,144 @@ using namespace std;
 class Data {
     int dia, mes, ano;
 
-    public:
-          
-        Data(int _dia, int _mes, int _ano) {
-            dia = _dia;
-            mes = _mes;
-            ano = _ano;
-        }
-
-        int getDia() const {
-            return dia;
-        }
-
-        int getMes() const {
-            return mes;
-        }
-
-        int getAno() const {
-            return ano;
-        }
-
-        string toString() {
-            string ret = "";
-            ret.append(to_string(dia));
-            ret.append("/");
-            ret.append(to_string(mes));
-            ret.append("/");
-            ret.append(to_string(ano));
-            return ret;
-        }
-        
-        int compararCom(const Data& _outraData) const {
-            if (ano < _outraData.ano)
+public:
+    int compararCom(const Data& outraData) const {
+        if (ano < outraData.ano)
+            return -1;
+        else if (ano > outraData.ano)
+            return 1;
+        else {
+            if (mes < outraData.mes)
                 return -1;
-            else if (ano > _outraData.ano)
+            else if (mes > outraData.mes)
                 return 1;
             else {
-                if (mes < _outraData.mes)
+                if (dia < outraData.dia)
                     return -1;
-                else if (mes > _outraData.mes)
+                else if (dia > outraData.dia)
                     return 1;
-                else {
-                    if (dia < _outraData.dia)
-                        return -1;
-                    else if (dia > _outraData.dia)
-                        return 1;
-                    else
-                        return 0;
-                }
+                else
+                    return 0;
             }
         }
+    }
 
-        static int compara(Data _d1, Data _d2) {
-            return _d1.compararCom(_d2);
-        }
+    static int compara(Data d1, Data d2) {
+        return d1.compararCom(d2);
+    }
+
+    Data(int _dia, int _mes, int _ano) {
+        dia = _dia;
+        mes = _mes;
+        ano = _ano;
+    }
+
+     int getDia() const {
+        return dia;
+    }
+
+    int getMes() const {
+        return mes;
+    }
+
+    int getAno() const {
+        return ano;
+    }
+
+    string toString() {
+        string ret = "";
+        ret.append(to_string(dia));
+        ret.append("/");
+        ret.append(to_string(mes));
+        ret.append("/");
+        ret.append(to_string(ano));
+        return ret;
+    }
 };
 
 class Lista {
-    public:
-        virtual void entradaDeDados() = 0;
-        virtual void mostraMediana() = 0;
-        virtual void mostraMenor() = 0;
-        virtual void mostraMaior() = 0;
-        virtual void listarEmOrdem() = 0;
+public:
+    virtual void entradaDeDados() = 0;
+    virtual void mostraMediana() = 0;
+    virtual void mostraMenor() = 0;
+    virtual void mostraMaior() = 0;
+    virtual void listarEmOrdem() = 0;
 };
 
-class ListaDatas : public Lista {
+/*template <typename T>
+class ListaGenerica : public Lista {
+    vector<T> elementos;
+
+    public:
+        void entradaDeDados() override {
+            int numElementos;
+            cout << "Quantos elementos vão existir na lista? ";
+            cin >> numElementos;
+            cin.ignore();
+
+            for (int i = 0; i < numElementos; i++) {
+                T elemento;
+                cout << "Digite o elemento " << i + 1 << ": ";
+                cin >> elemento;
+                cin.ignore();
+                elementos.push_back(elemento);
+            }
+        }
+
+        void mostraMediana() override {
+            if (elementos.empty()) {
+                cout << "A lista está vazia." << endl;
+                return;
+            }
+
+            sort(elementos.begin(), elementos.end());
+
+            int tamanho = elementos.size();
+            if (tamanho % 2 != 0) {
+                T mediana1 = elementos[tamanho / 2];
+                cout << "Mediana: " << mediana1 << endl;
+            } else {
+                T mediana2 = elementos[tamanho / 2 - 1];
+                cout << "Mediana: " << mediana2 << endl;
+            }
+        }
+
+        void mostraMenor() override {
+            if (elementos.empty()) {
+                cout << "A lista está vazia." << endl;
+                return;
+            }
+
+            T menor = *min_element(elementos.begin(), elementos.end());
+            cout << "Menor elemento: " << menor << endl;
+        }
+
+        void mostraMaior() override {
+            if (elementos.empty()) {
+                cout << "A lista está vazia." << endl;
+                return;
+            }
+
+            T maior = *max_element(elementos.begin(), elementos.end());
+            cout << "Maior elemento: " << maior << endl;
+        }
+        void listarEmOrdem() override {
+            int n;
+            cout << "Classificar quantos itens? " << endl;
+            cin >> n;
+            if (elementos.empty()) {
+            cout << "A lista está vazia." << endl;
+            return;
+            }
+
+            cout << "Exibindo " << n << " elementos da lista:" << endl;
+            for (int i = 0; i < min(n, static_cast<int>(elementos.size())); i++) {
+                cout << i+1 << "- " << elementos[i] << endl;
+            }
+        }
+};*/
+
+class gerarData : public Lista {
     vector<Data> dados;
 
     public:
@@ -81,7 +153,7 @@ class ListaDatas : public Lista {
             int dia, mes, ano;
 
             int numElementos;
-            cout << "Quantos elementos Datas? ";
+            cout << "Quantos elementos vão existir na lista de Datas? ";
             cin >> numElementos;
             cin.ignore();
 
@@ -94,36 +166,37 @@ class ListaDatas : public Lista {
 
                 dados.push_back(data);
             }
-                    
+            
         }
 
         void mostraMediana() override {
             if (dados.empty()) {
             cout << "A lista de datas está vazia." << endl;
             return;
-            }
+        }
 
         
-            sort(dados.begin(), dados.end(), Data::compara);
+        sort(dados.begin(), dados.end(), Data::compara);
 
-            int tamanho = dados.size();
+        int tamanho = dados.size();
+
         
-            if (tamanho % 2 != 0) {
-                Data mediana = dados[tamanho / 2];
-                cout << "Mediana: " << mediana.toString() << endl;
-            } else {
-                
-                Data mediana1 = dados[(tamanho - 1) / 2];
-                Data mediana2 = dados[tamanho / 2];
+        if (tamanho % 2 != 0) {
+            Data mediana = dados[tamanho / 2];
+            cout << "Mediana: " << mediana.toString() << endl;
+        } else {
+            
+            Data mediana1 = dados[(tamanho - 1) / 2];
+            Data mediana2 = dados[tamanho / 2];
 
-                
-                int dia = (mediana1.getDia() + mediana2.getDia()) / 2;
-                int mes = (mediana1.getMes() + mediana2.getMes()) / 2;
-                int ano = (mediana1.getAno() + mediana2.getAno()) / 2;
+            
+            int dia = (mediana1.getDia() + mediana2.getDia()) / 2;
+            int mes = (mediana1.getMes() + mediana2.getMes()) / 2;
+            int ano = (mediana1.getAno() + mediana2.getAno()) / 2;
 
-                Data mediana(dia, mes, ano);
-                cout << "Mediana: " << mediana.toString() << endl;
-            }
+            Data mediana(dia, mes, ano);
+            cout << "Mediana: " << mediana.toString() << endl;
+        }
         }
 
         void mostraMenor() override {
@@ -132,15 +205,15 @@ class ListaDatas : public Lista {
                 return;
             }
 
-            Data menor = dados[0]; 
+        Data menor = dados[0]; 
 
-            for (const Data& _data : dados)  {
-                if (_data.compararCom(menor) < 0) {
-                    menor = _data; 
-                }
+        for (const Data& data : dados) {
+            if (data.compararCom(menor) < 0) {
+                menor = data; 
             }
+        }
 
-            cout << "Menor data: " << menor.toString() << endl;
+        cout << "Menor data: " << menor.toString() << endl;
         }
 
         void mostraMaior() override {
@@ -149,20 +222,20 @@ class ListaDatas : public Lista {
                 return;
             }
 
-            Data maior = dados[0]; 
+        Data maior = dados[0]; 
 
-            for (const Data& _data : dados) {
-                if (_data.compararCom(maior) > 0) {
-                    maior = _data; 
-                }
+        for (const Data& data : dados) {
+            if (data.compararCom(maior) > 0) {
+                maior = data; 
             }
+        }
 
-            cout << "Maior data: " << maior.toString() << endl;
+        cout << "Maior data: " << maior.toString() << endl;
         }
 
         void listarEmOrdem() override {
             int n;
-            cout << "Classificar quantas Datas? " << endl;
+            cout << "Classificar quantos nomes? " << endl;
             cin >> n;
             if (dados.empty()) {
                 cout << "A lista de datas está vazia." << endl;
@@ -175,12 +248,13 @@ class ListaDatas : public Lista {
             }
         }
 };
+
 class ListaNomes : public Lista {
 	vector<string> lista;
 	
 	public:
 	
-	    void entradaDeDados() override {
+	void entradaDeDados() override {
             int numElementos;
             cout << "Quantos elementos para Nomes? ";
             cin >> numElementos;
@@ -253,7 +327,7 @@ class ListaSalarios : public Lista {
 	
 	public:
 	
-	    void entradaDeDados() override {
+	void entradaDeDados() override {
             int numElementos;
             cout << "Quantos elementos para Salários? ";
             cin >> numElementos;
@@ -325,8 +399,7 @@ class ListaIdades : public Lista  {
 	vector<int> lista;
 	
 	public:
-		
-        void entradaDeDados() override {
+		void entradaDeDados() override {
             int numElementos;
             cout << "Quantos elementos para Idades? ";
             cin >> numElementos;
@@ -398,7 +471,7 @@ class ListaIdades : public Lista  {
 int main() {
     vector<Lista*> listaGeral;
 
-    ListaDatas listaData;
+    gerarData listaData;
     ListaNomes listaNomes;
     ListaIdades listaIdades;
     ListaSalarios listaSalarios;
