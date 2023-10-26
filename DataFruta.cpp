@@ -2,112 +2,14 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <iomanip>
 
 using namespace std;
 
-class Data : public Lista {
-    vector<Data> dados;
+class Data {
     int dia, mes, ano;
 
     public:
-        void entradaDeDados() override {
-                int dia, mes, ano;
-
-                int numElementos;
-                cout << "Quantos elementos vão existir na lista de Datas? ";
-                cin >> numElementos;
-                cin.ignore();
-
-                for (int i = 0; i < numElementos; i++) {
-                    
-                    cout << "Digite a data " << i + 1 << " (dia mês ano): ";
-                    cin >> dia >> mes >> ano;
-
-                    Data data(dia, mes, ano);
-
-                    dados.push_back(data);
-                }
-                
-            }
-
-        void mostraMediana() override {
-            if (dados.empty()) {
-            cout << "A lista de datas está vazia." << endl;
-            return;
-        }
-
-        
-        sort(dados.begin(), dados.end(), Data::compara);
-
-        int tamanho = dados.size();
-
-        
-        if (tamanho % 2 != 0) {
-            Data mediana = dados[tamanho / 2];
-            cout << "Mediana: " << mediana.toString() << endl;
-        } else {
-            
-            Data mediana1 = dados[(tamanho - 1) / 2];
-            Data mediana2 = dados[tamanho / 2];
-
-            
-            int dia = (mediana1.getDia() + mediana2.getDia()) / 2;
-            int mes = (mediana1.getMes() + mediana2.getMes()) / 2;
-            int ano = (mediana1.getAno() + mediana2.getAno()) / 2;
-
-            Data mediana(dia, mes, ano);
-            cout << "Mediana: " << mediana.toString() << endl;
-        }
-        }
-
-        void mostraMenor() override {
-            if (dados.empty()) {
-                cout << "A lista de datas está vazia." << endl;
-                return;
-            }
-
-        Data menor = dados[0]; 
-
-        for (const Data& data : dados) {
-            if (data.compararCom(menor) < 0) {
-                menor = data; 
-            }
-        }
-
-        cout << "Menor data: " << menor.toString() << endl;
-        }
-
-        void mostraMaior() override {
-            if (dados.empty()) {
-                cout << "A lista de datas está vazia." << endl;
-                return;
-            }
-
-        Data maior = dados[0]; 
-
-        for (const Data& data : dados) {
-            if (data.compararCom(maior) > 0) {
-                maior = data; 
-            }
-        }
-
-        cout << "Maior data: " << maior.toString() << endl;
-        }
-
-        void listarEmOrdem() override {
-            int n;
-            cout << "Classificar quantos nomes? " << endl;
-            cin >> n;
-            if (dados.empty()) {
-                cout << "A lista de datas está vazia." << endl;
-                return;
-            }
-
-            cout << "Exibindo " << n << " datas da lista:" << endl;
-            for (int i = 0; i < min(n, static_cast<int>(dados.size())); i++) {
-                cout << i+1 << "- " << dados[i].toString() << endl;
-            }
-        }
         int compararCom(const Data& outraData) const {
             if (ano < outraData.ano)
                 return -1;
@@ -163,24 +65,124 @@ class Data : public Lista {
 };
 
 class Lista {
-public:
-    virtual void entradaDeDados() = 0;
-    virtual void mostraMediana() = 0;
-    virtual void mostraMenor() = 0;
-    virtual void mostraMaior() = 0;
-    virtual void listarEmOrdem() = 0;
+    public:
+        virtual void entradaDeDados() = 0;
+        virtual void mostraMediana() = 0;
+        virtual void mostraMenor() = 0;
+        virtual void mostraMaior() = 0;
+        virtual void listarEmOrdem() = 0;
 };
 
+class ListaDatas : public Lista {
+    vector<Data> dados;
 
+    public:
+        void entradaDeDados() override {
+            int dia, mes, ano;
 
+            int numElementos;
+            cout << "Quantos elementos para Data? ";
+            cin >> numElementos;
+            cin.ignore();
 
+            for (int i = 0; i < numElementos; i++) {
+                
+                cout << "Digite a data " << i + 1 << " (dia mês ano): ";
+                cin >> dia >> mes >> ano;
+
+                Data data(dia, mes, ano);
+
+                dados.push_back(data);
+            }
+            
+        }
+
+        void mostraMediana() override {
+            if (dados.empty()) {
+            cout << "A lista de datas está vazia." << endl;
+            return;
+            }
+
+        
+            sort(dados.begin(), dados.end(), Data::compara);
+
+            int tamanho = dados.size();
+
+        
+            if (tamanho % 2 != 0) {
+                Data mediana = dados[tamanho / 2];
+                cout << "Mediana: " << mediana.toString() << endl;
+            } else {
+                
+                Data mediana1 = dados[(tamanho - 1) / 2];
+                Data mediana2 = dados[tamanho / 2];
+
+                
+                int dia = (mediana1.getDia() + mediana2.getDia()) / 2;
+                int mes = (mediana1.getMes() + mediana2.getMes()) / 2;
+                int ano = (mediana1.getAno() + mediana2.getAno()) / 2;
+
+                Data mediana(dia, mes, ano);
+                cout << "Mediana: " << mediana.toString() << endl;
+            }
+        }
+
+        void mostraMenor() override {
+            if (dados.empty()) {
+                cout << "A lista de datas está vazia." << endl;
+                return;
+            }
+
+            Data menor = dados[0]; 
+
+            for (const Data& data : dados) {
+                if (data.compararCom(menor) < 0) {
+                    menor = data; 
+                }
+            }
+
+            cout << "Menor data: " << menor.toString() << endl;
+        }
+
+        void mostraMaior() override {
+            if (dados.empty()) {
+                cout << "A lista de datas está vazia." << endl;
+                return;
+            }
+
+            Data maior = dados[0]; 
+
+            for (const Data& data : dados) {
+                if (data.compararCom(maior) > 0) {
+                    maior = data; 
+                }
+            }
+
+            cout << "Maior data: " << maior.toString() << endl;
+        }
+
+        void listarEmOrdem() override {
+            int n;
+            cout << "Classificar quantas Datas? " << endl;
+            cin >> n;
+            if (dados.empty()) {
+                cout << "A lista de datas está vazia." << endl;
+                return;
+            }
+
+            cout << "Exibindo " << n << " datas da lista:" << endl;
+            for (int i = 0; i < min(n, static_cast<int>(dados.size())); i++) {
+                cout << i+1 << "- " << dados[i].toString() << endl;
+            }
+        }
+};
 
 class ListaNomes : public Lista {
 	vector<string> lista;
 	
 	public:
 	
-	    void entradaDeDados() override {
+        void entradaDeDados() override {
             
         }
 
@@ -193,8 +195,9 @@ class ListaNomes : public Lista {
         }
 
         void mostraMaior() override {
-           
+            
         }
+
         void listarEmOrdem() override {
             
         }
@@ -205,21 +208,22 @@ class ListaSalarios : public Lista {
 	
 	public:
 	
-	    void entradaDeDados() override {
+        void entradaDeDados() override {
             
         }
 
         void mostraMediana() override {
             
-        }
+        }    
 
         void mostraMenor() override {
             
         }
 
         void mostraMaior() override {
-            
+           
         }
+
         void listarEmOrdem() override {
             
         }
@@ -234,7 +238,9 @@ class ListaIdades : public Lista  {
         }
 
         void mostraMediana() override {
-        
+            
+
+            
         }
 
         void mostraMenor() override {
@@ -245,7 +251,7 @@ class ListaIdades : public Lista  {
             
         }
         void listarEmOrdem() override {
-                        
+            
         }
 	
 };
@@ -253,7 +259,7 @@ class ListaIdades : public Lista  {
 int main() {
     vector<Lista*> listaGeral;
 
-    gerarData listaData;
+    ListaDatas listaData;
     ListaNomes listaNomes;
     ListaIdades listaIdades;
     ListaSalarios listaSalarios;
