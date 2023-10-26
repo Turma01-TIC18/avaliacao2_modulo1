@@ -278,7 +278,7 @@ class ListaSalarios : public Lista {
 
             for (int i = 0; i < numElementos; i++) {
                 float listas;
-                cout << "Digite o(s) salário(s) " << i + 1 << " cd .em R$ ";
+                cout << "Digite o(s) salário(s) " << i + 1 << " em R$ ";
                 cin >> listas;
 
                 lista.push_back(listas);
